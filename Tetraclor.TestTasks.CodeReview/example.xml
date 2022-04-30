@@ -5,10 +5,18 @@
     Простой хлеб
   </title>
   <composition>
-
-    <ingredient amountcxjo982dsdfs="0.fsdfs@3)(25"    unit =   "грамм">Дрожжи</ingredient>
-    <ingredient amount="1.5" unit="стакан">Тёплая вода</ingredient>
-    <ingredient amount="3" unit="стакан">Мука</ingredient>
+    <!-- 
+        <step>
+           Почитать вчерашнюю газету. 
+        </step>
+         - это сомнительный шаг...
+        <ingredient amount="3" unit="Коментарий">Мука</ingredient>
+      -->
+    <ingredient amountcxjo982dsdfs="0.fsdfs@3)(25"    unit =   "Не форматированное">Дрожжи</ingredient>
+    <ingredient amount="1.5" 
+                unit="На двух линиях">Тёплая вода</ingredient>
+    <ingredient amount="1.5" unit="первый">Тёплая вода</ingredient>
+    <ingredient amount="3" unit="второй">Мука</ingredient>
   </composition>
   <instructions>
     <step>
