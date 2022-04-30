@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetraclor.TestTasks.Localization", "Tetraclor.TestTasks.Localization\Tetraclor.TestTasks.Localization.csproj", "{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tetraclor.TestTasks.Localization", "Tetraclor.TestTasks.Localization\Tetraclor.TestTasks.Localization.csproj", "{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetraclor.TestTasks.Localization.Tests", "Tetraclor.TestTasks.Localization.Tests\Tetraclor.TestTasks.Localization.Tests.csproj", "{CE71B6E8-E49B-4ADB-AA3D-16EC6DAAA228}"
+	ProjectSection(ProjectDependencies) = postProject
+		{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E} = {57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE71B6E8-E49B-4ADB-AA3D-16EC6DAAA228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE71B6E8-E49B-4ADB-AA3D-16EC6DAAA228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE71B6E8-E49B-4ADB-AA3D-16EC6DAAA228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE71B6E8-E49B-4ADB-AA3D-16EC6DAAA228}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
