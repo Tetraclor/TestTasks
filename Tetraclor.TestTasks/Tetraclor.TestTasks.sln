@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetraclor.TestTasks.Localization", "Tetraclor.TestTasks.Localization\Tetraclor.TestTasks.Localization.csproj", "{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC66E394-58B1-4249-BB8F-EB1C032FB2BC}
+	EndGlobalSection
+EndGlobal
