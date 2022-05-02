@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
+using System.Globalization;
+using System.Threading;
+using System;
 
 /*
 Для desktop-приложения нужно разработать набор классов для работы с локализованными строками, которые будут отображаться в интерфейсе пользователя. 
@@ -23,7 +25,7 @@ RegisterSource – регистрирует источник строк лока
 namespace Tetraclor.TestTasks.Localization
 {
     /// <summary>
-    /// Версия LocalizationFactory в реальном времени, 
+    /// Версия ILocalizationFactory в реальном времени, 
     /// то есть локализированные строки не кешируются из источников, 
     /// а извлекаются каждый раз при запросе
     /// </summary>
@@ -44,7 +46,7 @@ namespace Tetraclor.TestTasks.Localization
         public string GetString(string name, CultureInfo cultureInfo = null)
         {
             if (name == null) return null;
-            if (cultureInfo == null) cultureInfo = CultureInfo.CurrentCulture;
+            if (cultureInfo == null) cultureInfo = Thread.CurrentThread.CurrentCulture;
 
             var localizedString = new LocalizedString(name, name);
 
@@ -72,7 +74,7 @@ namespace Tetraclor.TestTasks.Localization
         /// </summary>
         /// <param name="localizationSource"></param>
         /// <returns>this</returns>
-        public LocalizationFactory RegisterSource(ILocalizationSource localizationSource)
+        public ILocalizationFactory RegisterSource(ILocalizationSource localizationSource)
         {
             if(_localizationSources.TryGetValue(localizationSource.CultureInfo, out List<ILocalizationSource> sourcesForCultureInfo) == false)
             {
@@ -86,3 +88,5 @@ namespace Tetraclor.TestTasks.Localization
         }
     }
 }
+
+

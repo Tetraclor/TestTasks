@@ -24,12 +24,20 @@ RegisterSource – регистрирует источник строк локализаций.
     public class LocalizationFactoryTests
     {
         ILocalizationSource dictSourceRu;
+        ILocalizationSource dictSourceEn;
+        ILocalizationSource dictSourceDe;
+
+        ILocalizationSource resourceRu;
+
         LocalizationFactory localizationFactory;
 
         [SetUp]
         public void Setup()
         {
-            dictSourceRu = new DictinaryLocalizationSourceRu();
+            dictSourceRu = DictionaryLocalizationSource.Ru;
+            dictSourceEn = DictionaryLocalizationSource.En;
+            dictSourceDe = DictionaryLocalizationSource.De;
+
             localizationFactory = new LocalizationFactory();
         }
 
@@ -90,6 +98,79 @@ RegisterSource – регистрирует источник строк локализаций.
         {
             localizationFactory.RegisterSource(dictSourceRu);
 
+            var result = localizationFactory.GetString(name, CultureInfo.GetCultureInfo(culture));
+
+            result.Should().BeEquivalentTo(localizedString);
+        }
+
+        [TestCase("Name", "Name", "en-EN")]
+        [TestCase("Source", "Source", "en-EN")]
+        [TestCase("NotFoundInSource", "NotFoundInSource", "en-EN")]
+        [TestCase("Name", "Имя", "ru-RU")]
+        [TestCase("Source", "Источник", "ru-RU")]
+        [TestCase("NotFoundInSource", "NotFoundInSource", "ru-RU")]
+        [TestCase("Name", "der Name", "de-DE")]
+        [TestCase("Source", "der Quelle", "de-DE")]
+        [TestCase("NotFoundInSource", "NotFoundInSource", "de-DE")]
+        public void TestAddThreeSource(string name, string localizedString, string culture)
+        {
+            localizationFactory.RegisterSource(dictSourceRu);
+            localizationFactory.RegisterSource(dictSourceDe);
+            localizationFactory.RegisterSource(dictSourceEn);
+
+            var result = localizationFactory.GetString(name, CultureInfo.GetCultureInfo(culture));
+
+            result.Should().BeEquivalentTo(localizedString);
+        }
+
+        [TestCase("Name", "Name", "en-EN")]
+        [TestCase("Source", "Source", "en-EN")]
+        [TestCase("NotFoundInSource", "NotFoundInSource", "en-EN")]
+        [TestCase("Name", "ФИО", "ru-RU")]
+        [TestCase("Source", "Родник", "ru-RU")]
+        [TestCase("NotFoundInSource", "NotFoundInSource", "ru-RU")]
+        [TestCase("Name", "der Name", "de-DE")]
+        [TestCase("Source", "der Quelle", "de-DE")]
+        [TestCase("NotFoundInSource", "NotFoundInSource", "de-DE")]
+        public void TestIntersectSources(string name, string localizedString, string culture)
+        {
+            localizationFactory.RegisterSource(dictSourceRu);
+            localizationFactory.RegisterSource(dictSourceDe);
+            localizationFactory.RegisterSource(dictSourceEn);
+            // Ресурс который регистрируется позже переопределяет значения по одинковым ключам
+            localizationFactory.RegisterSource(
+                new DictionaryLocalizationSource(CultureInfo.GetCultureInfo("ru-RU"), 
+                new () { 
+                    ["Source"] = "Родник",
+                    ["Name"] = "ФИО"
+            }));
+
+            var result = localizationFactory.GetString(name, CultureInfo.GetCultureInfo(culture));
+           
+            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(culture);
+            var resultIfCultureNull = localizationFactory.GetString(name);
+
+            result.Should().BeEquivalentTo(localizedString);
+            resultIfCultureNull.Should().BeEquivalentTo(localizedString);
+        }
+
+        [TestCase("Name", "Name", "en-EN")]
+        [TestCase("Source", "Source", "en-EN")]
+        [TestCase("Header", "Main Page", "en-EN")]
+        [TestCase("Name", "Имя", "ru-RU")]
+        [TestCase("Source", "Источник", "ru-RU")]
+        [TestCase("Header", "Header", "ru-RU")]
+        public void TestDetermSource(string name, string localizedString, string culture)
+        {
+            localizationFactory.RegisterSource(dictSourceRu);
+            localizationFactory.RegisterSource(
+               new DictionaryLocalizationSource(CultureInfo.GetCultureInfo("en-EN"),
+               new()
+               {
+                   ["Source"] = "Source",
+                   ["Name"] = "Name",
+                   ["Header"] = "Main Page"
+               }));
             var result = localizationFactory.GetString(name, CultureInfo.GetCultureInfo(culture));
 
             result.Should().BeEquivalentTo(localizedString);
