@@ -3,6 +3,7 @@ using FluentAssertions;
 using Tetraclor.TestTasks.Localization;
 using System.Globalization;
 using System;
+using System.Threading;
 
 namespace Tetraclor.TestTasks.Localization.Tests
 {
@@ -47,7 +48,7 @@ RegisterSource – регистрирует источник строк локализаций.
         public void TestNullSource()
         {
             Action action = () => localizationFactory.RegisterSource(null);
-            action();
+
             action.Should().Throw<ArgumentException>();
         }
 
@@ -214,6 +215,65 @@ RegisterSource – регистрирует источник строк локализаций.
             result = localizationFactory.GetString(name, CultureInfo.GetCultureInfo(culture));
 
             result.Should().BeEquivalentTo(localizedStringSourceChange);
+        }
+
+        // Тестирование методов расширения возваращающих конкретные локализированные строки
+
+        [TestCase("Name", "en-EN")]
+        [TestCase("Имя", "ru-RU")]
+        [TestCase("der Name", "de-DE")]
+        public void TestReposExtName(string localizedString, string culture)
+        {
+            localizationFactory = new LocalizationFactory();
+
+            MakeReposExtTest(localizationFactory.Name, localizedString, culture);
+        }
+
+        [TestCase("Phone", "en-EN")]
+        [TestCase("Телефон", "ru-RU")]
+        [TestCase("Phone", "de-DE")]
+        public void TestReposExtPhone(string localizedString, string culture)
+        {
+            localizationFactory = new LocalizationFactory();
+
+            MakeReposExtTest(localizationFactory.Phone, localizedString, culture);
+        }
+
+        void MakeReposExtTest(Func<string> getLocalizedString, string localizedString, string culture)
+        {
+            var dictSource = new DictionaryLocalizationSource(CultureInfo.GetCultureInfo("ru-RU"),
+               new()
+               {
+                   ["Source"] = "Источник",
+                   ["Name"] = "Имя",
+                   ["Phone"] = "Телефон"
+               });
+
+            localizationFactory.RegisterSource(dictSourceEn);
+            localizationFactory.RegisterSource(dictSourceDe);
+            localizationFactory.RegisterSource(dictSource);
+
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
+
+            getLocalizedString().Should().BeEquivalentTo(localizedString);
+        }
+    }
+
+
+    /// <summary>
+    ///    ? 7. Предусмотреть возможность хранения строк локализаций в полях класса без привязки к конкретной культуре 
+    ///    с возможностью последующего получения значения строки для нужного языка.
+    /// </summary>
+    public static class LocalizationFactoryReposExt
+    {
+        public static string Name(this LocalizationFactory localizationFactory)
+        {
+            return localizationFactory.GetString(nameof(Name));
+        }
+
+        public static string Phone(this LocalizationFactory localizationFactory)
+        {
+            return localizationFactory.GetString(nameof(Phone));
         }
     }
 }

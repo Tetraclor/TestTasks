@@ -5,12 +5,12 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tetraclor.TestTasks.Localization", "Tetraclor.TestTasks.Localization\Tetraclor.TestTasks.Localization.csproj", "{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetraclor.TestTasks.Localization.Tests", "Tetraclor.TestTasks.Localization.Tests\Tetraclor.TestTasks.Localization.Tests.csproj", "{CE71B6E8-E49B-4ADB-AA3D-16EC6DAAA228}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tetraclor.TestTasks.Localization.Tests", "Tetraclor.TestTasks.Localization.Tests\Tetraclor.TestTasks.Localization.Tests.csproj", "{CE71B6E8-E49B-4ADB-AA3D-16EC6DAAA228}"
 	ProjectSection(ProjectDependencies) = postProject
 		{57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E} = {57E09DD4-A44B-4B0C-B7EA-0FCFEA6AFD7E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetraclor.TestTasks.CodeReview", "Tetraclor.TestTasks.CodeReview\Tetraclor.TestTasks.CodeReview.csproj", "{C0FFAD15-9A75-444D-926D-B429D1079964}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tetraclor.TestTasks.CodeReview", "Tetraclor.TestTasks.CodeReview\Tetraclor.TestTasks.CodeReview.csproj", "{C0FFAD15-9A75-444D-926D-B429D1079964}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
