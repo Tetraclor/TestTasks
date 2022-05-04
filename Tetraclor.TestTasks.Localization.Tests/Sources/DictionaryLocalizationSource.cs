@@ -8,7 +8,7 @@ namespace Tetraclor.TestTasks.Localization
     public class DictionaryLocalizationSource : ILocalizationSource
     {
         public CultureInfo CultureInfo { get; private set; } = CultureInfo.InvariantCulture;
-        Dictionary<string, string> _localizedStrings = new();
+        public Dictionary<string, string> _localizedStrings = new();
 
 
         public static DictionaryLocalizationSource Ru = new DictionaryLocalizationSource(

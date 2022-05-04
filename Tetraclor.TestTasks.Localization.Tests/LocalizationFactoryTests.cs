@@ -139,14 +139,14 @@ RegisterSource – регистрирует источник строк локализаций.
             localizationFactory.RegisterSource(dictSourceEn);
             // Ресурс который регистрируется позже переопределяет значения по одинковым ключам
             localizationFactory.RegisterSource(
-                new DictionaryLocalizationSource(CultureInfo.GetCultureInfo("ru-RU"), 
-                new () { 
+                new DictionaryLocalizationSource(CultureInfo.GetCultureInfo("ru-RU"),
+                new() {
                     ["Source"] = "Родник",
                     ["Name"] = "ФИО"
-            }));
+                }));
 
             var result = localizationFactory.GetString(name, CultureInfo.GetCultureInfo(culture));
-           
+
             CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(culture);
             var resultIfCultureNull = localizationFactory.GetString(name);
 
@@ -174,6 +174,36 @@ RegisterSource – регистрирует источник строк локализаций.
             var result = localizationFactory.GetString(name, CultureInfo.GetCultureInfo(culture));
 
             result.Should().BeEquivalentTo(localizedString);
+        }
+
+        [TestCase("Name", "Имя", "Name", "ru-RU")]
+        [TestCase("Source", "Источник", "Родник", "ru-RU")]
+        [TestCase("Phone", "Телефон", "Телефон", "ru-RU")]
+        [TestCase("Header", "Header", "Главная страница", "ru-RU")]
+        [TestCase("NotFoundInSource", "NotFoundInSource", "NotFoundInSource", "ru-RU")]
+        public void TestWhenSourceStateChange(string name, string localizedString, string localizedStringSourceChange, string culture)
+        {
+            var dictSource = new DictionaryLocalizationSource(CultureInfo.GetCultureInfo(culture),
+               new()
+               {
+                   ["Source"] = "Источник",
+                   ["Name"] = "Имя",
+                   ["Phone"] = "Телефон"
+               });
+
+            localizationFactory.RegisterSource(dictSource);
+
+            var result = localizationFactory.GetString(name, CultureInfo.GetCultureInfo(culture));
+            
+            result.Should().BeEquivalentTo(localizedString);
+
+            dictSource._localizedStrings["Header"] = "Главная страница";
+            dictSource._localizedStrings["Source"] = "Родник";
+            dictSource._localizedStrings.Remove("Name");
+
+            result = localizationFactory.GetString(name, CultureInfo.GetCultureInfo(culture));
+
+            result.Should().BeEquivalentTo(localizedStringSourceChange);
         }
     }
 }
