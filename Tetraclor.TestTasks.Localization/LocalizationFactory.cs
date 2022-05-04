@@ -36,6 +36,8 @@ namespace Tetraclor.TestTasks.Localization
         readonly Dictionary<CultureInfo, List<ILocalizationSource>> _localizationSources = new();
         readonly Dictionary<ILocalizationSource, int> _localizationSourcesOrder = new();
 
+        ILocalizationSource _defaultLocalizationSource = new DefaultLocalizationSource();
+
         /// <summary>
         /// Локализация name в соотсветсвии с переданным cultureInfo, если не передано,
         /// то используется CultureInfo.DefaultThreadCurrentCulture
@@ -76,6 +78,8 @@ namespace Tetraclor.TestTasks.Localization
         /// <returns>this</returns>
         public ILocalizationFactory RegisterSource(ILocalizationSource localizationSource)
         {
+            if (localizationSource == null) throw new ArgumentException($"{nameof(localizationSource)} should be not null");
+
             if(_localizationSources.TryGetValue(localizationSource.CultureInfo, out List<ILocalizationSource> sourcesForCultureInfo) == false)
             {
                 sourcesForCultureInfo = new List<ILocalizationSource>();
@@ -85,6 +89,13 @@ namespace Tetraclor.TestTasks.Localization
             
             _localizationSourcesOrder[localizationSource] = lastOrder++;
             return this;
+        }
+
+        private class DefaultLocalizationSource : ILocalizationSource
+        {
+            public CultureInfo CultureInfo => CultureInfo.InvariantCulture;
+
+            public LocalizedString GetString(string name) => new LocalizedString(name, name);
         }
     }
 }

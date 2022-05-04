@@ -2,6 +2,7 @@ using NUnit.Framework;
 using FluentAssertions;
 using Tetraclor.TestTasks.Localization;
 using System.Globalization;
+using System;
 
 namespace Tetraclor.TestTasks.Localization.Tests
 {
@@ -14,7 +15,8 @@ namespace Tetraclor.TestTasks.Localization.Tests
     4. Необходимо предусмотреть возможность подключения произвольного источника строк.
     5. Система локализации должна самостоятельно определять источник строк по переданному коду строки локализации (коды могут быть любыми).
     6. Разные источники могут иметь пересечения по кодам строк, система должна корректно определять из какого источника брать строку в каждом конкретном случае.
-    7. Предусмотреть возможность хранения строк локализаций в полях класса без привязки к конкретной культуре с возможностью последующего получения значения строки для нужного языка.
+    7. Предусмотреть возможность хранения строк локализаций в полях класса без привязки к конкретной культуре 
+    с возможностью последующего получения значения строки для нужного языка.
 Реализация
     Для работы с локализациями необходимо разработать класс LocalizationFactory, который предоставляет следующие методы:
 GetString – возвращает значение строки локализации по её коду для переданной культуры;
@@ -39,6 +41,14 @@ RegisterSource – регистрирует источник строк локализаций.
             dictSourceDe = DictionaryLocalizationSource.De;
 
             localizationFactory = new LocalizationFactory();
+        }
+
+        [Test]
+        public void TestNullSource()
+        {
+            Action action = () => localizationFactory.RegisterSource(null);
+            action();
+            action.Should().Throw<ArgumentException>();
         }
 
         [TestCase(null, null)]
