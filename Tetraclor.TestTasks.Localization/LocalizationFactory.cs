@@ -36,6 +36,8 @@ namespace Tetraclor.TestTasks.Localization
         readonly Dictionary<CultureInfo, List<ILocalizationSource>> _localizationSources = new();
         readonly Dictionary<ILocalizationSource, int> _localizationSourcesOrder = new();
 
+        ILocalizationSource _defaultLocalizationSource = new DefaultLocalizationSource();
+
         /// <summary>
         /// Локализация name в соотсветсвии с переданным cultureInfo, если не передано,
         /// то используется CultureInfo.DefaultThreadCurrentCulture
@@ -87,6 +89,13 @@ namespace Tetraclor.TestTasks.Localization
 
             _localizationSourcesOrder[localizationSource] = lastOrder++;
             return this;
+        }
+
+        private class DefaultLocalizationSource : ILocalizationSource
+        {
+            public CultureInfo CultureInfo => CultureInfo.InvariantCulture;
+
+            public LocalizedString GetString(string name) => new LocalizedString(name, name);
         }
     }
 }
